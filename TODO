@@ -1,0 +1,10 @@
+ * Convert sources to rulesfile.mk.in files and autogenerate headers/footers at
+   compile time.
+
+ * Create a dh_alternatives debhelper script to do the work in alternatives.mk.
+
+ * Allow for authentication when connecting to github and bitbucket.
+
+ * Have some vars (such as source uri's) read from debian/control
+
+ * Provide practical examples in the documentation.

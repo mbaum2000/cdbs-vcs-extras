@@ -1,0 +1,17 @@
+Source: cdbs-vcs-extras
+Section: devel
+Priority: extra
+Maintainer: Mike Baum <mb694@cairn.edu>
+Build-Depends: cdbs (>= 0.4.89)
+Standards-Version: 3.7.2
+Vcs-Git: https://github.com/mbaum2000/cdbs-vcs-extras
+Vcs-Browser: https://github.com/mbaum2000/cdbs-vcs-extras
+
+Package: cdbs-vcs-extras
+Architecture: all
+Depends: cdbs (>= 0.4.89)
+Description: CDBS VCS Extras are a set of makefile-based rule files
+ to be used in conjunction with the Common Debian Build System (CDBS) to
+ make debian/rules files.  The rules provided here are primarily
+ intended to aid in the creation of source tarballs generated from an
+ upstream Version Control System (VCS) using the get-orig-source target.

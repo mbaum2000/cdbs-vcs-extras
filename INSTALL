@@ -1,0 +1,42 @@
+Copyright (c) 2013 Mike Baum
+Distributed under the GNU GPL software license, see the accompanying
+file COPYING or http://www.gnu.org/licenses/gpl.html.
+
+To Build
+--------
+
+This project is made up entirely of makefile includes, and has no code
+to be compiled.  Running `make` or `make build` amounts to a no-op.  To
+make use of the software, see the installation section below.
+
+Dependencies
+------------
+
+CDBS version 0.4.89 or greater is required.  On Debian and Ubuntu systems,
+it can be installed by running:
+
+sudo apt-get install cdbs
+
+Installation
+------------
+
+To install this project from source, run `make install` (as root, unless
+a prefix is specified).  The default install directory is the standard
+cdbs directory, located at /usr/share/cdbs/1.  An install prefix can be
+specified by invoking:
+
+make install DESTDIR=<prefix>
+
+which will install the files to `<prefix>/usr/share/cdbs/1`.
+Alternately, a custom install directory can be specified by invoking:
+
+make install CDBS1_DIR=<install_dir>
+
+If an alternate directory is specified, the debian/rules file that
+contains any rules defined by this project need to include the lines:
+
+_cdbs_vcs_rules_path ?= <install_dir>/rules
+_cdbs_vcs_class_path ?= <install_dir>/class
+
+before any of the rules are included.
+
