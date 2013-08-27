@@ -1,0 +1,6 @@
+debian/*.log
+debian/*.substvars
+debian/cdbs-vcs-extras/
+debian/files
+debian/stamp-*
+debian/stamp-*

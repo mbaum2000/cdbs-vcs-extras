@@ -1,11 +1,11 @@
 Introduction
 ============
 
-CDBS VCS Extras are a set of makefile-based rule files to be used in conjunction
-with the Common Debian Build System (CDBS) to make debian/rules files.  The
-rules provided here are primarily intended to aid in the creation of source
-tarballs generated from an upstream Version Control System (VCS) using the
-get-orig-source target.
+CDBS VCS Extras are a set of makefile-based rule files to be used in
+conjunction with the Common Debian Build System (CDBS) to make
+debian/rules files.  The rules provided here are primarily intended to
+aid in the creation of source tarballs generated from an upstream
+Version Control System (VCS) using the get-orig-source target.
 
 
 VCS Related Rules
@@ -13,60 +13,70 @@ VCS Related Rules
 
 vcs-vars.mk
 ------------
-By including this file, the following variables will be made available to you:
+By including this file, the following variables will be made available
+to you:
 
 DEB_VCS_UPSTREAM_VERSION:
-	This variable is automatically set by parsing the debian source package
-	version from the changelog. It is the upstream source package version
-	without any specific revision tags.  For example, if your version number is
-	'1.0+svn256-debian0', this will be set to '1.0'.
+	This variable is automatically set by parsing the debian source
+	package version from the changelog. It is the upstream source
+	package version without any specific revision tags.  For example, if
+	your version number is '1.0+svn256-debian0', this will be set to
+	'1.0'.
 DEB_VCS_UPSTREAM_REVISION:
-	This variable is automatically set by parsing the debian source package
-	version from the changelog. It is the portion of the upstream version number
-	that follows the '+<vcs-type>' string.  For example, if your version number
-	is '1.0+svn256-debian0', this will be set to '256'.  If the version string
-	does not contain a '+<vcs-type>' string, this will be blank.
+	This variable is automatically set by parsing the debian source
+	package version from the changelog. It is the portion of the
+	upstream version number that follows the '+<vcs-type>' string.  For
+	example, if your version number is '1.0+svn256-debian0', this will
+	be set to '256'.  If the version string does not contain a
+	'+<vcs-type>' string, this will be blank.
 DEB_VCS_UPSTREAM_TYPE:
-	This variable is automatically set by parsing the debian source package
-	version from the changelog. It is the portion of the upstream version number
-	that is identified by the '+<vcs-type>' string.  For example, if your
-	version number is '1.0+svn256-debian0', this will be set to 'svn'.  If the
-	version string does not contain a '+<vcs-type>' string, this will be blank.
+	This variable is automatically set by parsing the debian source
+	package version from the changelog. It is the portion of the
+	upstream version number that is identified by the '+<vcs-type>'
+	string.  For example, if your version number is
+	'1.0+svn256-debian0', this will be set to 'svn'.  If the version
+	string does not contain a '+<vcs-type>' string, this will be blank.
 VCS_UPSTREAM_VERSION:
-	This variable is used by the following rules and can be set by the package
-	maintainer. (Default: $(DEB_VCS_UPSTREAM_VERSION))
+	This variable is used by the following rules and can be set by the
+	package maintainer.
+	(Default: $(DEB_VCS_UPSTREAM_VERSION))
 VCS_UPSTREAM_REVISION:
-	This variable is used by the following rules and can be set by the package
-	maintainer. (Default: $(DEB_VCS_UPSTREAM_REVISION))
+	This variable is used by the following rules and can be set by the
+	package maintainer.
+	(Default: $(DEB_VCS_UPSTREAM_REVISION))
 VCS_UPSTREAM_TYPE:
-	This variable is used by the following rules and can be set by the package
-	maintainer. (Default: $(DEB_VCS_UPSTREAM_TYPE))
+	This variable is used by the following rules and can be set by the
+	package maintainer.
+	(Default: $(DEB_VCS_UPSTREAM_TYPE))
 vcs_types_known:
-	This variable is set to a list of the types of version control systems
-	currently known to this system.  By default, it is 'git svn', but it can be
-	expanded by installing new fetchers with the filename of:
-	$(_cdbs_vcs_rules_path)/vcs-fetch-<vcs-type>.mk
+	This variable is set to a list of the types of version control
+	systems currently known to this system.  By default, it is
+	'git svn', but it can be expanded by installing new fetchers with
+	the filename of: $(_cdbs_vcs_rules_path)/vcs-fetch-<vcs-type>.mk
 
 git-hosted.mk
 -------------
-This rule will allow the package maintainer to download a pre-generated tarball
-from a hosted git repository, such as bitbucket.org or github.com.  However, if
-you are using either of those two hosting options, bitbucket.mk and github.mk
-are provided and documented below, though this option makes it easier to roll
-rules for another hosting option not available here.  It uses
-upstream-tarball.mk from CDBS under the hood to do all of the heavy lifting and
-makes use of the following variables:
+This rule will allow the package maintainer to download a pre-generated
+tarball from a hosted git repository, such as bitbucket.org or
+github.com.  However, if you are using either of those two hosting
+options, bitbucket.mk and github.mk are provided and documented below,
+though this option makes it easier to roll rules for another hosting
+option not available here.  It uses upstream-tarball.mk from CDBS under
+the hood to do all of the heavy lifting and makes use of the following
+variables:
 
 DEB_TARBALL:
-	git-hosted.mk will automatically set DEB_TARBALL to the filename of the
-	downloaded tarball as a convenience for when using tarball.mk.
+	git-hosted.mk will automatically set DEB_TARBALL to the filename of
+	the downloaded tarball as a convenience for when using tarball.mk.
 DEB_TAR_SRCDIR:
-	git-hosted.mk will automatically set DEB_TAR_SRCDIR to the source directory
-	inside the generated tarball as a convenience for when using tarball.mk.
+	git-hosted.mk will automatically set DEB_TAR_SRCDIR to the source
+	directory inside the generated tarball as a convenience for when
+	using tarball.mk.
 DEB_UPSTREAM_TARBALL_BASENAME:
-	The base filename of the tarball to download from $(DEB_UPSTREAM_URL). By
-	default, this is set to hosted_short_revision, if it is set, otherwise the
-	value of VCS_FETCH_TAG.
+	The base filename of the tarball to download from
+	$(DEB_UPSTREAM_URL). By default, this is set to
+	hosted_short_revision, if it is set, otherwise the value of
+	VCS_FETCH_TAG.
 DEB_UPSTREAM_TARBALL_EXTENSION:
 	The file extension of the tarball to download.
 	(Default: tar.gz)
@@ -76,131 +86,139 @@ DEB_UPSTREAM_WORKDIR:
 VCS_FETCH_USER:
 	The username of the hosted account to download the tarball from.
 VCS_FETCH_PROJECT:
-	The name of the project on the hosted account to download the tarball from.
+	The name of the project on the hosted account to download the
+	tarball from.
 VCS_FETCH_TAG:
 	The git tag to download a generated tarball for.
 	(Default: $(VCS_UPSTREAM_VERSION))
 VCS_FETCH_REV:
-	The git revision to download a generated tarball for.  This will override
-	VCS_FETCH_TAG if it is set.
+	The git revision to download a generated tarball for.  This will
+	override VCS_FETCH_TAG if it is set.
 	(Default: $(VCS_UPSTREAM_REVISION))
 hosted_short_revision:
-	This variable can be set to the git short-revision used by the hosted
-	provider.  By default, it will be the full git revision, since different
-	providers use different lengths.
+	This variable can be set to the git short-revision used by the
+	hosted provider.  By default, it will be the full git revision,
+	since different providers use different lengths.
 
-As a note, DEB_UPSTREAM_URL is *not* set by git-hosted.mk and the package
-maintainer will need to set that variable.
+As a note, DEB_UPSTREAM_URL is *not* set by git-hosted.mk and the
+package maintainer will need to set that variable.
 
 bitbucket.mk
 ------------
-This rule will allow the package maintainer to download a pre-generated tarball
-from a bitbucket.org account.  It makes use of the variables documented in the
-git-hosted.mk section, but for convenience automatically sets the following:
+This rule will allow the package maintainer to download a pre-generated
+tarball from a bitbucket.org account.  It makes use of the variables
+documented in the git-hosted.mk section, but for convenience
+automatically sets the following:
 
 DEB_UPSTREAM_URL:
-	Automatically set to the bitbucket tarball download URL for the specified
-	user (VCS_FETCH_USER) and project (VCS_FETCH_PROJECT).
+	Automatically set to the bitbucket tarball download URL for the
+	specified user (VCS_FETCH_USER) and project (VCS_FETCH_PROJECT).
 hosted_short_revision:
 	The 12-character git short-revision used by bitbucket.
 
 github.mk
 ---------
-This rule will allow the package maintainer to download a pre-generated tarball
-from a github.org account.  It makes use of the variables documented in the
-git-hosted.mk section, but for convenience automatically sets the following:
+This rule will allow the package maintainer to download a pre-generated
+tarball from a github.org account.  It makes use of the variables
+documented in the git-hosted.mk section, but for convenience
+automatically sets the following:
 
 DEB_UPSTREAM_URL:
-	Automatically set to the github tarball download URL for the specified user
-	(VCS_FETCH_USER) and project (VCS_FETCH_PROJECT).
+	Automatically set to the github tarball download URL for the
+	specified user (VCS_FETCH_USER) and project (VCS_FETCH_PROJECT).
 VCS_FETCH_TAG:
-	By default, this variable is set to VCS_UPSTREAM_VERSION as defined in
-	vcs-vars.mk by git-hosted.mk.  However, in many cases, github prepends a 'v'
-	to the tagged version number, so github.mk will automatically prepend the
-	VCS_FETCH_TAG here with a 'v'.  For example, if VCS_UPSTREAM_VERSION is set
-	to '1.0', then VCS_FETCH_TAG will be set to 'v1.0'.  This can be overridded
-	if necessary by setting VCS_FETCH_TAG to whatever your project uses.
+	By default, this variable is set to VCS_UPSTREAM_VERSION as defined
+	in vcs-vars.mk by git-hosted.mk.  However, in many cases, github
+	prepends a 'v' to the tagged version number, so github.mk will
+	automatically prepend the VCS_FETCH_TAG here with a 'v'.  For
+	example, if VCS_UPSTREAM_VERSION is set to '1.0', then VCS_FETCH_TAG
+	will be set to 'v1.0'.  This can be overridded if necessary by
+	setting VCS_FETCH_TAG to whatever your project uses.
 hosted_short_revision:
 	The 7-character git short-revision used by github.
 
 vcs-fetch.mk
 ------------
-This rule provides the base with which to create a fetcher for a version control
-system.  A developer can create a new fetcher by adding a file named:
-$(_cdbs_vcs_rules_path)/vcs-fetch-<vcs-type>.mk which includes this makefile and
-has a rule named:
-$(<vcs-type>_stamps)
-where <vcs-type> is the name of the new vcs being registered.  By adding this
-file, <vcs-type> will be added to the variable vcs_types_known.  This rule must
-fetch the sources from 'src_uri', and then package them up into
-'create_tarball'.  It makes use of the following variables:
+This rule provides the base with which to create a fetcher for a version
+control system.  A developer can create a new fetcher by adding a file
+named: $(_cdbs_vcs_rules_path)/vcs-fetch-<vcs-type>.mk which includes
+this makefile and has a rule named: $(<vcs-type>_stamps) where
+<vcs-type> is the name of the new vcs being registered.  By adding this
+file, <vcs-type> will be added to the variable vcs_types_known.  This
+rule must fetch the sources from 'src_uri', and then package them up
+into 'create_tarball'.  It makes use of the following variables:
 
 DEB_UPSTREAM_WORKDIR:
 	The directory to download the tarball to.
 	(Default: ../tarballs)
 
 DEB_TARBALL:
-	vcs-fetch.mk will automatically set DEB_TARBALL to the filename of the
-	downloaded tarball as a convenience for when using tarball.mk.
+	vcs-fetch.mk will automatically set DEB_TARBALL to the filename of
+	the downloaded tarball as a convenience for when using tarball.mk.
 
 DEB_TAR_SRCDIR:
-	vcs-fetch.mk will automatically set DEB_TAR_SRCDIR to the source directory
-	inside the generated tarball as a convenience for when using tarball.mk.
+	vcs-fetch.mk will automatically set DEB_TAR_SRCDIR to the source
+	directory inside the generated tarball as a convenience for when
+	using tarball.mk.
 
 VCS_TARBALL_WORKDIR_ROOT:
 	This is the root staging directory for creating source tarballs.
 	(Default: $(DEB_UPSTREAM_WORKDIR)/dfsg/)
-	
+
 VCS_TARBALL_WORKDIR:
-	This is the directory to download the sources to in order to stage for
-	packaging.
+	This is the directory to download the sources to in order to stage
+	for packaging.
 	(Default: $(VCS_TARBALL_WORKDIR_ROOT)/$(DEB_TAR_SRCDIR))
 
 VCS_TARBALL_EXTENSION:
-	This is the file extension if the source tarball to make.  Currently, it
-	can be set to the following: tar tar.gz tgz tar.bz2 tbz2 tar.bz tbz tar.lzma
+	This is the file extension if the source tarball to make.
+	Currently, it can be set to the following:
+	tar tar.gz tgz tar.bz2 tbz2 tar.bz tbz tar.lzma
 	(Default: tar.gz)
 
 VCS_FETCH_SRC:
 	This is the source URI(s) of the remote repositories to download and
-	package.  Each source uri must be prepended with <vcs-type>+.  For example,
-	a git repository hosted at https://example.com/myproject would be
-	represented as:
+	package.  Each source uri must be prepended with <vcs-type>+.  For
+	example, a git repository hosted at https://example.com/myproject
+	would be represented as:
 	VCS_FETCH_SRC = git+https://example.com/myproject.git
 
 vcs_base_components:
-	When multiple sources are specified in VCS_FETCH_SRC, this will contain a
-	list of components, derived from the basename of each source URI, in order
-	to provide unique names for each source tarball.
+	When multiple sources are specified in VCS_FETCH_SRC, this will
+	contain a list of components, derived from the basename of each
+	source URI, in order to provide unique names for each source
+	tarball.
 
-The rule $(<vcs-type>_stamps) is also provided with the following variables
-available on a per-source basis (if VCS_FETCH_SRC contains multiple URI's):
+The rule $(<vcs-type>_stamps) is also provided with the following
+variables available on a per-source basis (if VCS_FETCH_SRC contains
+multiple URI's):
 
 src_uri:
-	This variable is set to the source URI set in VCS_FETCH_SRC for the current
-	repo to fetch sources for, minus the prefix.
+	This variable is set to the source URI set in VCS_FETCH_SRC for the
+	current repo to fetch sources for, minus the prefix.
 
 component:
-	This variable is set to the current component being downloaded, as set in
-	vcs_base_comonents.
+	This variable is set to the current component being downloaded, as
+	set in vcs_base_comonents.
 
 create_tarball:
-	This variable is set to the name and path of the tarball being created.
+	This variable is set to the name and path of the tarball being
+	created.
 
 vcs-fetch-git.mk
 ----------------
-This rule provides a fetcher for a git repository.  To make use of this, include
-this file and add the source URI for the repository, prepened with git+ to the
-VCS_FETCH_SRC variable.  For example:
+This rule provides a fetcher for a git repository.  To make use of this,
+include this file and add the source URI for the repository, prepened
+with git+ to the VCS_FETCH_SRC variable.  For example:
 
 VCS_FETCH_SRC = git+https://example.com/myproject.git
 include /usr/share/cdbs/1/rules/vcs-fetch-git.mk
 
 vcs-fetch-svn.mk
 ----------------
-This rule provides a fetcher for a svn repository.  To make use of this, include
-this file and add the source URI for the repository, prepened with svn+ to the
-VCS_FETCH_SRC variable.  For example:
+This rule provides a fetcher for a svn repository.  To make use of this,
+include this file and add the source URI for the repository, prepened
+with svn+ to the VCS_FETCH_SRC variable.  For example:
 
 VCS_FETCH_SRC = svn+https://example.com/svn/myproject
 include /usr/share/cdbs/1/rules/vcs-fetch-svn.mk
@@ -211,9 +229,9 @@ Other Rules
 
 alternatives.mk
 ---------------
-This rule adds script snippets to the debian packages postinst and prerm scripts
-that will set up links for the Debian alternatives system.  It makes use of the
-following variables:
+This rule adds script snippets to the debian packages postinst and prerm
+scripts that will set up links for the Debian alternatives system.  It
+makes use of the following variables:
 
 ALTERNATIVES_LINK:
 	The generic name for the master link.
@@ -228,15 +246,17 @@ ALTERNATIVES_PACKAGE:
 	The debian binary package to contain these scripts.
 	(Default: the first binary package being generated)
 
-See man update-alternatives(8) for more information on what these options do.
+See man update-alternatives(8) for more information on what these
+options do.
 
 autofetch.mk
 ------------
-Provides a rule to automatically fetch the latest source tarball from the remote
-system at the time that the package build is done.  In most cases you should
-not use this, as automatically fetching sources is against debian policy, but
-it can be useful in some special cases, such as creating nightly builds.  To
-enable this feature, simply include this rule:
+Provides a rule to automatically fetch the latest source tarball from
+the remote system at the time that the package build is done.  In most
+cases you should not use this, as automatically fetching sources is
+against debian policy, but it can be useful in some special cases, such
+as creating nightly builds.  To enable this feature, simply include this
+rule:
 
 include /usr/share/cdbs/1/rules/autofetch.mk
 
@@ -246,18 +266,19 @@ Special Notes
 
 Debugging Options
 =================
-To aid in debugging, several special rules have been provided that print the
-values of variables used by the included file.  They are:
+To aid in debugging, several special rules have been provided that print
+the values of variables used by the included file.  They are:
 
 debug/print-<class_name>-vars:
 	This will print out the variables, along with their values.
 
 debug/print-<class_name>-vars-unexpand:
-	This will print out the variables, along with their unexpanded values.
+	This will print out the variables, along with their unexpanded
+	values.
 
-where <class_name> is the base name of the included file without the suffix, for
-example, debug/print-vcs-fetch-git-vars.  The following rules will print all of
-the variables used in the project:
+where <class_name> is the base name of the included file without the
+suffix, for example, debug/print-vcs-fetch-git-vars.  The following
+rules will print all of the variables used in the project:
 
 debug/print-all:
 	Print all variables, expanded and unexpanded.
@@ -269,17 +290,18 @@ debug/print-all-vars-unexpand:
 	Print all variables, unexpanded.
 
 To add debugging support to your own rules/classes, set the variable
-_debug_variables to the list of variables that you want to include, and then
-include the debug.mk file.  It will automatically base the rule name on the
-filename of the makefile that calls it.  For example:
+_debug_variables to the list of variables that you want to include, and
+then include the debug.mk file.  It will automatically base the rule
+name on the filename of the makefile that calls it.  For example:
 
 _debug_variables := DEB_TARBALL DEB_TAR_SRCDIR
 include /usr/share/cdbs/1/rules/debug.mk
 
-will create debug rules to display the values of the variables DEB_TARBALL and
-DEB_TAR_SRCDIR.
+will create debug rules to display the values of the variables
+DEB_TARBALL and DEB_TAR_SRCDIR.
 
-If you want to disable these debugging targets, set CDBS_VCS_DEBUG_DISABLE = 1.
+If you want to disable these debugging targets, set
+CDBS_VCS_DEBUG_DISABLE = 1.
 
 
 Some Examples
